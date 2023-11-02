@@ -9,11 +9,13 @@ if 'test' not in globals():
 
 @transformer
 def transform(df, *args, **kwargs):
-    df['unique_id'] = df.apply(lambda row: f"{slugify(row.provider)}-{row.machineID}", axis=1)
 
-    df['ds'] = pd.to_datetime(df['time'], unit='us')
+    df['unique_id'] = df.apply(lambda row: f"{slugify(row.provider)}-{row.machineid}", axis=1)
+
+    df['ds'] = pd.to_datetime(df['_time'], unit='us')
+    df['power'] = df._power
     # .astype(int)
-    print(df.machineID.unique())
+    print(df.machineid.unique())
     return df
 
 

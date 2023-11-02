@@ -2,53 +2,18 @@ blocks:
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
-  downstream_blocks:
-  - blue_meadow
+  downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: load_influx_data
+  name: extract_from_influx
   retry_config: null
   status: executed
   timeout: null
   type: data_loader
   upstream_blocks: []
-  uuid: load_influx_data
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks:
-  - detect_anomalies
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: transform_data
-  retry_config: null
-  status: executed
-  timeout: null
-  type: transformer
-  upstream_blocks:
-  - autumn_grass
-  uuid: transform_data
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks:
-  - check_anomalies
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: detect_anomalies
-  retry_config: null
-  status: failed
-  timeout: null
-  type: transformer
-  upstream_blocks:
-  - transform_data
-  uuid: detect_anomalies
+  uuid: extract_from_influx
 - all_upstream_blocks_executed: true
   color: null
   configuration:
@@ -60,20 +25,53 @@ blocks:
     limit: 1000
     use_raw_sql: true
   downstream_blocks:
-  - autumn_grass
+  - transform
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: sql
-  name: blue meadow
+  name: extract_from_demo
   retry_config: null
   status: executed
   timeout: null
   type: data_loader
+  upstream_blocks: []
+  uuid: extract_from_demo
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - detect_anomalies
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: transform
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
   upstream_blocks:
-  - load_influx_data
-  uuid: blue_meadow
-- all_upstream_blocks_executed: false
+  - extract_from_demo
+  uuid: transform
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - check_anomalies
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: detect_anomalies
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - transform
+  uuid: detect_anomalies
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -89,33 +87,25 @@ blocks:
   upstream_blocks:
   - detect_anomalies
   uuid: check_anomalies
+callbacks: []
+concurrency_config: {}
+conditionals:
 - all_upstream_blocks_executed: true
   color: null
-  configuration:
-    data_provider: duckdb
-    data_provider_profile: default
-    data_provider_table: influx_demo
-    dbt: {}
-    export_write_policy: replace
-    limit: 1000
-    use_raw_sql: false
-  downstream_blocks:
-  - transform_data
+  configuration: {}
+  downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
-  language: sql
-  name: autumn grass
+  language: python
+  name: still scholar
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
-  type: data_exporter
+  type: conditional
   upstream_blocks:
-  - blue_meadow
-  uuid: autumn_grass
-callbacks: []
-concurrency_config: {}
-conditionals: []
+  - extract_from_influx
+  uuid: still_scholar
 created_at: '2023-10-04 18:57:39.600458+00:00'
 data_integration: null
 description: null
@@ -130,6 +120,6 @@ run_pipeline_in_one_process: false
 spark_config: {}
 tags: []
 type: python
-updated_at: '2023-11-01 19:46:23'
+updated_at: '2023-11-01 20:48:07'
 uuid: influx_mage_demo
 widgets: []

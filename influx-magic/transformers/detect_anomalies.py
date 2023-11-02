@@ -5,7 +5,6 @@ from river import preprocessing
 from river import metrics
 from river import utils
 from river import anomaly
-import plotly.express as px
 import pandas as pd
 
 if 'transformer' not in globals():
@@ -18,7 +17,7 @@ if 'test' not in globals():
 def transform(df, *args, **kwargs):
     
     anomaly_dfs = pd.DataFrame(columns=["date", "score", "value", "is_anomaly", "unique_id"])
-
+    
     for uid in df.unique_id.unique():
         print(uid)
         

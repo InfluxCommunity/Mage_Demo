@@ -8,4 +8,5 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 COPY requirements.txt ${USER_CODE_PATH}/requirements.txt 
 
-RUN pip3 install -r ${USER_CODE_PATH}/requirements.txt
+RUN pip3 install --upgrade pip \
+    && pip3 install -r ${USER_CODE_PATH}/requirements.txt
